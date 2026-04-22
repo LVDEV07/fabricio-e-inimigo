@@ -12,13 +12,13 @@ Sistema web para gerenciar o fluxo de uma biblioteca, substituindo o controle ma
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/seu-repositorio.git
+   git clone https://github.com/SENAI-Cotia/fabricio-e-inimigo
    cd seu-repositorio
    ```
 
 2. Configure o banco de dados em `src/main/resources/application.properties`:
    ```properties
-   spring.datasource.url=jdbc:mysql://localhost:3306/biblioteca
+   spring.datasource.url=jdbc:mysql://localhost:3306/fabricio-e-inimigo
    spring.datasource.username=seu_usuario
    spring.datasource.password=sua_senha
    spring.jpa.hibernate.ddl-auto=update
