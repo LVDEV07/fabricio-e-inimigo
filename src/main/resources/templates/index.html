@@ -1,10 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Index</title>
+
 </head>
 <body>
+<a th:href="@{/cadastro}">Criar novo usuario</a>
+
+<table th:if="${!users.isEmpty()}">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Senha</th>
+        <th>Cargo</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="user:${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.nome}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.senha}"></td>
+        <td th:text="${user.cargo}"></td>
+
+
+    <td><a th:href = "@{/editar/{id} (id= ${user.id})}">Editar</a></td>
+        <td><a th:href = "@{/excluir/{id} (id= ${user.id})}">Deletar</a></td>
+
+    </tr>
+    </tbody>
+</table>
+<p th:if="${users.isEmpty()}">Nenhum usuario cadastrado</p>
 
 </body>
 </html>
