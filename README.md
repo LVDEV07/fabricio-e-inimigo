@@ -18,7 +18,7 @@ Sistema web para gerenciar o fluxo de uma biblioteca, substituindo o controle ma
 
 2. Configure o banco de dados em `src/main/resources/application.properties`:
    ```properties
-   spring.datasource.url=jdbc:mysql://localhost:3306/fabricio-e-inimigo
+   spring.datasource.url=jdbc:mysql://localhost:3306/biblioteca
    spring.datasource.username=seu_usuario
    spring.datasource.password=sua_senha
    spring.jpa.hibernate.ddl-auto=update
