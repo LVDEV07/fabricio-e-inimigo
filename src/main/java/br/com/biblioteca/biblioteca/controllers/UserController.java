@@ -45,13 +45,13 @@ public class UserController {
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute User userCadastro, RedirectAttributes redirectAttributes){
         if (userCadastro.getEmail().trim().isEmpty() || userCadastro.getNome().trim().isEmpty() || userCadastro.getSenha().trim().isEmpty() || userCadastro.getCargo() == null) {
-            redirectAttributes.addFlashAttribute("mensagemErro", "Informe o e-mail e o nome do usuario");
+            redirectAttributes.addFlashAttribute("mensagemErro", "Insira todas as informações");
             return "redirect:/cadastro";
         }
 
         Optional<User> userComMesmoEmail = userRepository.findByEmail(userCadastro.getEmail());
 
-        if (userComMesmoEmail.isPresent()){
+        if (userComMesmoEmail.isPresent() && !userComMesmoEmail.get().getId().equals(userCadastro.getId())){
             redirectAttributes.addFlashAttribute("mensagemEmail", "E-mail já está cadastrado");
             return "redirect:/cadastro";
         }
@@ -67,6 +67,8 @@ public class UserController {
             userQueVeioDoBancoDeDados.setNome(userCadastro.getNome());
             userQueVeioDoBancoDeDados.setEmail(userCadastro.getEmail());
             userQueVeioDoBancoDeDados.setSenha(userCadastro.getSenha());
+            userQueVeioDoBancoDeDados.setIdLivroAlugado(userCadastro.getIdLivroAlugado());
+            userQueVeioDoBancoDeDados.setCargo(userCadastro.getCargo());
 
             userRepository.save(userQueVeioDoBancoDeDados);
         }
@@ -76,9 +78,17 @@ public class UserController {
     }
 
     @GetMapping("/excluir/{id}")
-    public String excluir(@PathVariable Long id){
+    public String excluir(@PathVariable Long id, RedirectAttributes redirectAttributes){
+
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        if (user.getIdLivroAlugado() != null) {
+            redirectAttributes.addFlashAttribute("mensagemErro", "Não é possível excluir um usuário com livro alugado!");
+            return "redirect:/";
+        }
+
         userRepository.deleteById(id);
 
+        redirectAttributes.addFlashAttribute("mensagemSucesso", "Usuário excluído com sucesso!");
         return "redirect:/";
     }
 

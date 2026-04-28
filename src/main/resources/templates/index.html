@@ -16,6 +16,8 @@
         <th>Nome</th>
         <th>Email</th>
         <th>Senha</th>
+        <th>ID Livro alugado</th>
+
         <th>Cargo</th>
     </tr>
     </thead>
@@ -26,6 +28,7 @@
         <td th:text="${user.nome}"></td>
         <td th:text="${user.email}"></td>
         <td th:text="${user.senha}"></td>
+        <td th:text="${user.idLivroAlugado != null ? user.idLivroAlugado : 'Nenhum livro'} "></td>
         <td th:text="${user.cargo}"></td>
 
 
@@ -37,5 +40,8 @@
 </table>
 <p th:if="${users.isEmpty()}">Nenhum usuario cadastrado</p>
 
+<div th:if = "${mensagemErro}">
+    <p th:text = "${mensagemErro}"></p>
+</div>
 </body>
 </html>
