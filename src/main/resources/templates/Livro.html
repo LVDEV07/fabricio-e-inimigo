@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Index</title>
+
+</head>
+<body>
+<a th:href="@{/home/cadastroLivro}">Adicionar novo livro</a>
+
+<table th:if="${!livros.isEmpty()}">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Nome</th>
+        <th>Autor</th>
+        <th>Genero</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="livro:${livros}">
+        <td th:text="${livro.id}"></td>
+        <td th:text="${livro.nome}"></td>
+        <td th:text="${livro.autor}"></td>
+        <td th:text="${livro.genero}"></td>
+
+
+        <td><a th:href = "@{/home/editarLivro/{id} (id= ${livro.id})}">Editar</a></td>
+        <td><a th:href = "@{/home/excluir/{id} (id= ${livro.id})}">Deletar</a></td>
+
+    </tr>
+    </tbody>
+</table>
+<p th:if="${livros.isEmpty()}">Nenhum livro encontrado</p>
+
+</body>
+</html>
