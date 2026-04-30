@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro Livro</title>
+</head>
+<body>
+<div th:if = "${mensagemErro}">
+    <p th:text = "${mensagemErro}"></p>
+</div>
+
+<h1 th:text = "${livro.id == null } ? 'Novo Livro' : 'Atualizar Livro' "></h1>
+<form th:object="${livro}" method="post" th:action="@{/home/salvarLivro}">
+
+    <input type="hidden" th:field="*{id} ">
+
+    <label>Nome: </label>
+    <input type="text" th:field="*{nome}">
+
+    <label>Autor: </label>
+    <input type="text" th:field="*{autor}">
+
+    <label>Genero: </label>
+    <input type="text" th:field="*{genero}">
+
+
+    <br>
+
+    <button type="submit">
+        Salvar
+    </button>
+    <a th:href="@{/home}">Cancelar</a>
+</form>
+
+</body>
+</html>
