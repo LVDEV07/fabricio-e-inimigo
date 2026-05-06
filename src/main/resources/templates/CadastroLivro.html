@@ -1,37 +1,66 @@
-
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Cadastro Livro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Livros</title>
+    <link rel="stylesheet" th:href="@{/css/styleCadastroLivros.css}">
+
 </head>
 <body>
-<div th:if = "${mensagemErro}">
-    <p th:text = "${mensagemErro}"></p>
+
+<div class="container">
+
+    <h1 class = "tituloCadastro" th:text = "${livro.id == null } ? 'Novo Livro' : 'Atualizar Livro'"> </h1>
+
+    <div th:if = "${mensagemErro}">
+        <p th:text = "${mensagemErro}"></p>
+    </div>
+
+    <form th:object="${livro}" method="post" th:action="@{/home/salvarLivro}">
+
+        <input type="hidden" th:field="*{id} ">
+
+    <div class="campo">
+        <label for="nome">Nome do livro</label>
+        <input type="text" th:field="*{nome}" id="nome" name="nome" placeholder="Ex: Dom Casmurro" >
+    </div>
+
+    <div class="campo">
+        <label for="autor">Autor</label>
+        <input type="text" th:field="*{autor}" id="autor" name="autor" placeholder="Ex: Machado de Assis">
+    </div>
+
+
+        <div class="campo">
+            <label for="genero">Gênero</label>
+            <select id="genero" name="genero" th:field="*{genero}">
+                <option value="">Selecione...</option>
+                <option value="romance">Romance</option>
+                <option value="ficcao">Ficção Científica</option>
+                <option value="fantasia">Fantasia</option>
+                <option value="terror">Terror</option>
+                <option value="misterio">Mistério</option>
+                <option value="biografia">Biografia</option>
+                <option value="historia">História</option>
+                <option value="infantil">Infantil</option>
+                <option value="outro">Outro</option>
+            </select>
+        </div>
+
+
+    <div class="campo">
+        <label for="urlImagem">URL da imagem da capa</label>
+        <input type="url" th:field="*{urlCapa}" id="urlImagem" name="urlImagem" placeholder="https://exemplo.com">
+    </div>
+
+    <div class="botoes">
+        <a type="button" class="btn-cancelar" th:href="@{/home}">Cancelar</a>
+        <button type="submit" class="btn-salvar">Salvar livro</button>
+    </div>
+        </form>
 </div>
 
-<h1 th:text = "${livro.id == null } ? 'Novo Livro' : 'Atualizar Livro' "></h1>
-<form th:object="${livro}" method="post" th:action="@{/home/salvarLivro}">
-
-    <input type="hidden" th:field="*{id} ">
-
-    <label>Nome: </label>
-    <input type="text" th:field="*{nome}">
-
-    <label>Autor: </label>
-    <input type="text" th:field="*{autor}">
-
-    <label>Genero: </label>
-    <input type="text" th:field="*{genero}">
-
-
-    <br>
-
-    <button type="submit">
-        Salvar
-    </button>
-    <a th:href="@{/home}">Cancelar</a>
-</form>
 
 </body>
 </html>
