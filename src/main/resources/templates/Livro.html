@@ -1,39 +1,36 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Index</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca - admin</title>
+    <link rel="stylesheet" th:href="@{/css/styleLivroAdmin.css}">
 
 </head>
 <body>
-<a th:href="@{/home/cadastroLivro}">Adicionar novo livro</a>
 
-<table th:if="${!livros.isEmpty()}">
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>Nome</th>
-        <th>Autor</th>
-        <th>Genero</th>
-    </tr>
-    </thead>
-    <tbody>
+<div class="cabecalho">
+    <img th:src="@{/images/BIBLIOTECH.png}" alt="logo">
+    <h1>Bibliotech</h1>
+    <a class="btn-novo" th:href="@{/home/cadastroLivro}">+ Novo livro</a>
+</div>
 
-    <tr th:each="livro:${livros}">
-        <td th:text="${livro.id}"></td>
-        <td th:text="${livro.nome}"></td>
-        <td th:text="${livro.autor}"></td>
-        <td th:text="${livro.genero}"></td>
+<div class="grade">
 
+    <div class="card" th:each="livro : ${livros}">
+        <img th:src="${livro.urlCapa}" th:alt="${livro.nome}">
+        <p class="card-nome" th:text="${livro.nome}"></p>
+        <p class="card-autor" th:text="${livro.autor}"></p>
+        <div class="card-acoes">
+            <a class="btn-editar" th:href="@{/home/editarLivro/{id}(id=${livro.id})}">Editar</a>
+            <a class="btn-excluir" th:href="@{/home/excluir/{id}(id=${livro.id})}">Excluir</a>
+        </div>
+    </div>
 
-        <td><a th:href = "@{/home/editarLivro/{id} (id= ${livro.id})}">Editar</a></td>
-        <td><a th:href = "@{/home/excluir/{id} (id= ${livro.id})}">Deletar</a></td>
+    <p th:if="${livros.isEmpty()}">Nenhum livro encontrado</p>
 
-    </tr>
-    </tbody>
-</table>
-<p th:if="${livros.isEmpty()}">Nenhum livro encontrado</p>
+</div>
 
 </body>
 </html>
