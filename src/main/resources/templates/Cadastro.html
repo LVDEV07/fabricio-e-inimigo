@@ -1,57 +1,69 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Cadastro</title>
-</head>
-<body>
-<div th:if = "${mensagemErro}">
-    <p th:text = "${mensagemErro}"></p>
-</div>
+    <!DOCTYPE html>
+    <html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Cadastro</title>
+        <link rel="stylesheet" th:href="@{/css/styleCadastroUser.css}">
+    </head>
+    <body>
+    <div th:if = "${mensagemErro}">
+        <p th:text = "${mensagemErro}"></p>
+    </div>
 
 
+    <div class="container">
+    <h1 th:text = "${user.id == null } ? 'Cadastro' : 'Atualizar Usuário' "></h1>
+    <form th:object="${user}" method="post" th:action="@{/salvar}">
 
-<h1 th:text = "${user.id == null } ? 'Cadastro' : 'Atualizar Usuário' "></h1>
-<form th:object="${user}" method="post" th:action="@{/salvar}">
-
-    <input type="hidden" th:field="*{id} ">
-
-    <label>Nome: </label>
-    <input type="text" th:field="*{nome}">
-
-    <label>Email: </label>
-    <input type="email" th:field="*{email}">
-
-    <label>Senha: </label>
-    <input type="text" th:field="*{senha}">
+        <input type="hidden" th:field="*{id} ">
 
 
+        <div class="campo">
 
-    <label th:if="${user.id != null}">ID Livro alugado</label>
-    <input type="number" th:field="*{idLivroAlugado}" th:if="${user.id != null}">
+        <label>Nome: </label>
+        <input type="text" th:field="*{nome}" required>
 
-
-
-    <label>Cargo: </label>
-    <select th:field="*{cargo}">
-        <option value="">Selecione...</option>
-        <option th:each="cargo : ${cargos}"
-                th:value="${cargo}"
-                th:text="${cargo}">
-        </option>
-    </select>
+    </div>
 
 
-    <br>
+        <div class="campo">
+        <label>Email: </label>
+        <input type="email" th:field="*{email}" required>
+        </div>
 
-    <button type="submit">
-        Salvar
-    </button>
-    <a th:href="@{/}">Cancelar</a>
-</form>
+        <div class="campo">
+        <label>Senha: </label>
+        <input type="text" th:field="*{senha}" required>
+        </div>
 
-<div th:if = "${mensagemEmail}">
-    <p th:text = "${mensagemEmail}"></p>
-</div>
-</body>
-</html>
+        <div class="campo">
+        <label th:if="${user.id != null}">ID Livro alugado</label>
+        <input type="number" th:field="*{idLivroAlugado}" th:if="${user.id != null}">
+        </div>
+
+        <div class="campo">
+        <label>Cargo: </label>
+        <select th:field="*{cargo}" required>
+            <option value="">Selecione...</option>
+            <option th:each="cargo : ${cargos}"
+                    th:value="${cargo}"
+                    th:text="${cargo}">
+            </option>
+        </select>
+        </div>
+
+        <br>
+        <div class="botoes">
+        <button type="submit" class="btn-salvar">
+            Salvar
+        </button>
+        <a th:href="@{/}" class="btn-cancelar">Cancelar</a>
+        </div>
+    </form>
+    </div>
+
+    <div th:if = "${mensagemEmail}">
+        <p th:text = "${mensagemEmail}"></p>
+    </div>
+    </body>
+    </html>
