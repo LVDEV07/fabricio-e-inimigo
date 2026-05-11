@@ -1,0 +1,73 @@
+
+        body {
+          background-color: #C4703A;
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 40px 20px;
+        }
+
+        .container {
+          max-width: 520px;
+          margin: 0 auto;
+          background-color: #F0E0CC;
+          border-radius: 10px;
+          padding: 40px;
+          border: 1px solid #e5e7eb;
+        }
+
+        h1 {
+          font-size: 22px;
+          color: #1a1a2e;
+          margin: 0 0 30px 0;
+        }
+
+
+        .campo {
+          margin-bottom: 18px;
+        }
+
+        label {
+          display: block;
+          font-size: 14px;
+          color: #1E0C04;
+          margin-bottom: 6px;
+          font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="url"],
+        select {
+          width: 100%;
+          padding: 10px 14px;
+          font-size: 14px;
+          border: 1px solid #D4B89A;
+          border-radius: 6px;
+          background-color: #F7EDE0;
+          color: #1E0C04;
+          box-sizing: border-box;
+        }
+
+        .botoes {
+          display: flex;
+          justify-content: flex-end;
+          gap: 12px;
+        }
+
+        .btn-cancelar {
+          padding: 10px 20px;
+          font-size: 14px;
+          background-color: #5C1F0A;
+          color: #F5D5B8;
+          border: 1px solid #57A2E10;
+          border-radius: 6px;
+        }
+
+        .btn-salvar {
+          padding: 10px 24px;
+          font-size: 14px;
+          background-color: #8A3E18;
+          color: #FFD9B8;
+          border: 1px solid #8A3E18;
+          border-radius: 6px;
+          cursor: pointer;
+        }

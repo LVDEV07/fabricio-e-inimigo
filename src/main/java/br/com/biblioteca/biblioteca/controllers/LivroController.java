@@ -42,10 +42,11 @@ public class LivroController {
 
     @PostMapping("/salvarLivro")
     public String salvar(@ModelAttribute Livro livroCadastro, RedirectAttributes redirectAttributes){
-        if (livroCadastro.getNome().trim().isEmpty() || livroCadastro.getAutor().trim().isEmpty() || livroCadastro.getGenero().trim().isEmpty()) {
+        if (livroCadastro.getNome().trim().isEmpty() || livroCadastro.getAutor().trim().isEmpty() || livroCadastro.getGenero().trim().isEmpty() || livroCadastro.getUrlCapa().trim().isEmpty()) {
             redirectAttributes.addFlashAttribute("mensagemErro", "Informe o nome, o autor e o genero do livro");
 
             return "redirect:/home/cadastroLivro";
+
         }
 
         if(livroCadastro.getId() == null) {
@@ -58,6 +59,7 @@ public class LivroController {
             livroQueVeioDoBancoDeDados.setNome(livroCadastro.getNome());
             livroQueVeioDoBancoDeDados.setAutor(livroCadastro.getAutor());
             livroQueVeioDoBancoDeDados.setGenero(livroCadastro.getGenero());
+            livroQueVeioDoBancoDeDados.setUrlCapa(livroCadastro.getUrlCapa());
 
             livroRepository.save(livroQueVeioDoBancoDeDados);
         }

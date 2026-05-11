@@ -14,15 +14,28 @@ public class Livro {
     private String autor;
     @Column(nullable = false, length = 100)
     private String genero;
+    @Column(nullable = false, length = 600)
+    private String urlCapa;
 
-    public Livro(Long id, String nome, String autor, String genero) {
+
+
+    public Livro(Long id, String nome, String autor, String genero, String urlCapa) {
         this.id = id;
         this.nome = nome;
         this.autor = autor;
         this.genero = genero;
+        this.urlCapa = urlCapa;
     }
 
     public Livro(){
+    }
+
+    public String getUrlCapa() {
+        return urlCapa;
+    }
+
+    public void setUrlCapa(String urlCapa) {
+        this.urlCapa = urlCapa;
     }
 
     public Long getId() {
