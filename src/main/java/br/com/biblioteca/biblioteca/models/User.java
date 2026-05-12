@@ -1,6 +1,7 @@
 package br.com.biblioteca.biblioteca.models;
 
 import br.com.biblioteca.biblioteca.Enums.Cargo;
+import br.com.biblioteca.biblioteca.Enums.Status;
 import jakarta.persistence.*;
 
 @Entity
@@ -20,20 +21,35 @@ public class User {
 
     @Column(nullable = true, unique = true)
     private Long idLivroAlugado;
-
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Cargo cargo;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Status status;
 
     public User() {
     }
 
-    public User(Long id, String nome, String email, String senha, Long idLivroAlugado, Cargo cargo) {
+    public User(Long id, String nome, String email, String senha, Long idLivroAlugado, Cargo cargo, Status status) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.idLivroAlugado = idLivroAlugado;
         this.cargo = cargo;
+        this.status = status;
+    }
+
+
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public Long getId() {

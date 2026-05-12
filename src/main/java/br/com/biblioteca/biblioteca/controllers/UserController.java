@@ -1,6 +1,7 @@
 package br.com.biblioteca.biblioteca.controllers;
 
 import br.com.biblioteca.biblioteca.Enums.Cargo;
+import br.com.biblioteca.biblioteca.Enums.Status;
 import br.com.biblioteca.biblioteca.models.User;
 import br.com.biblioteca.biblioteca.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
-    @GetMapping
+    @GetMapping("/")
     public String getUser(Model model){
         List<User> users = userRepository.findAll();
         model.addAttribute("users",users);
@@ -30,6 +31,7 @@ public class UserController {
     public String cadastroUser(Model model){
         model.addAttribute("user", new User());
         model.addAttribute("cargos", Cargo.values());
+        model.addAttribute("statuss", Status.values());
         return "Cadastro";
     }
 
@@ -39,12 +41,13 @@ public class UserController {
         User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
         model.addAttribute("user", user);
         model.addAttribute("cargos", Cargo.values());
+        model.addAttribute("statuss", Status.values());
         return "Cadastro";
     }
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute User userCadastro, RedirectAttributes redirectAttributes){
-        if (userCadastro.getEmail().trim().isEmpty() || userCadastro.getNome().trim().isEmpty() || userCadastro.getSenha().trim().isEmpty() || userCadastro.getCargo() == null) {
+        if (userCadastro.getEmail().trim().isEmpty() || userCadastro.getNome().trim().isEmpty() || userCadastro.getSenha().trim().isEmpty() || userCadastro.getStatus() == null || userCadastro.getCargo() == null) {
             redirectAttributes.addFlashAttribute("mensagemErro", "Insira todas as informações");
             return "redirect:/cadastro";
         }
@@ -68,6 +71,7 @@ public class UserController {
             userQueVeioDoBancoDeDados.setEmail(userCadastro.getEmail());
             userQueVeioDoBancoDeDados.setSenha(userCadastro.getSenha());
             userQueVeioDoBancoDeDados.setIdLivroAlugado(userCadastro.getIdLivroAlugado());
+            userQueVeioDoBancoDeDados.setStatus(userCadastro.getStatus());
             userQueVeioDoBancoDeDados.setCargo(userCadastro.getCargo());
 
             userRepository.save(userQueVeioDoBancoDeDados);

@@ -42,6 +42,17 @@
         </div>
 
         <div class="campo">
+            <label>Status: </label>
+            <select th:field="*{status}" required>
+                <option value="">Selecione...</option>
+                <option th:each="status : ${statuss}"
+                        th:value="${status}"
+                        th:text="${status}">
+                </option>
+            </select>
+        </div>
+
+        <div class="campo">
         <label>Cargo: </label>
         <select th:field="*{cargo}" required>
             <option value="">Selecione...</option>
