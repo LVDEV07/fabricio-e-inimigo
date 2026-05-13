@@ -3,15 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link rel="stylesheet" th:href="@{/css/styleLogin.css}">
+    <style>
+        body{
+    background-color: #C4703A;
+    font-family: Arial, sans-serif;
+    margin: 300px;
+}
+
+.container{
+    max-width: 520px;
+    margin: 0 auto;
+    background-color: #F0E0CC;
+    border-radius: 10px;
+    padding: 40px;
+    border: 1px solid #e5e7eb;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+}
+
+.login-email{
+    display: block;
+}
+
+input{
+    border: 1px solid #D4B89A;
+    border-radius: 4px;
+    width: 100%;
+    height: 28px;
+}
+
+.login-botoes{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    margin-left: 40px;
+    gap: 10px;
+}
+
+button{
+    width: 100px;
+    height: 30px;
+    border-radius: 2px;
+}
+
+.btn-admin{
+  background-color: #8A3E18;
+  color: #FFD9B8;
+  border: 1px solid #8A3E18;
+  cursor: pointer;
+}
+
+.btn-aluno{
+    background-color: #5C1F0A;
+    color: #F5D5B8;
+    border: 1px solid #5c1f10;
+    cursor: pointer;
+}
+
+p{
+    font-weight: bolder;
+}
+
+.avancar{
+    margin-top: 15px;
+    display: flex;
+    justify-content: right;
+}
+
+.btn-avancar{
+    background-color: #8A3E18;
+    color: #FFD9B8;
+    cursor: pointer;
+    border: 1px solid #8A3E18;
+}
+    </style>
 </head>
 <body>
 <div class="container">
     <h3>Login</h3>
+    <form method="post" th:action="@{/home}">
         <div class="form">
             <div class="login-email">
                 <p>E-mail:</p>
-                <input type="email" placeholder="email@example.com" required>
+                <input type="email" placeholder="email@example.com" required autofocus>
             </div>
             <div class="login-senha">
                 <p>Senha:</p>
@@ -22,9 +99,10 @@
                 <button class="btn-aluno">Aluno</button>
             </div>
             <div class="avancar">
-                <button class="btn-avancar">Avançar</button>
+                <button class="btn-avancar" type="submit">Avançar</button>
             </div>
         </div>
+    </form>
 </div>
 </body>
 </html>
