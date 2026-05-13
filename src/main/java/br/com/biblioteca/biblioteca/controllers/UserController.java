@@ -45,6 +45,9 @@ public class UserController {
         return "Cadastro";
     }
 
+    @GetMapping("/login")
+    public String loginPage(){return "login";}
+
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute User userCadastro, RedirectAttributes redirectAttributes){
         if (userCadastro.getEmail().trim().isEmpty() || userCadastro.getNome().trim().isEmpty() || userCadastro.getSenha().trim().isEmpty() || userCadastro.getStatus() == null || userCadastro.getCargo() == null) {
