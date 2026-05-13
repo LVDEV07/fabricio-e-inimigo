@@ -61,6 +61,8 @@
           color: #F5D5B8;
           border: 1px solid #57A2E10;
           border-radius: 6px;
+          cursor: pointer;
+          text-decoration: none;
         }
 
         .btn-salvar {

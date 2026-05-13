@@ -4,44 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Index</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
+    </style>
 
 </head>
 <body>
-<a th:href="@{/cadastro}">Criar novo usuario</a>
 
-<table th:if="${!users.isEmpty()}">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>Email</th>
-        <th>Senha</th>
-        <th>ID Livro alugado</th>
-
-        <th>Cargo</th>
-    </tr>
-    </thead>
-    <tbody>
-
-    <tr th:each="user:${users}">
-        <td th:text="${user.id}"></td>
-        <td th:text="${user.nome}"></td>
-        <td th:text="${user.email}"></td>
-        <td th:text="${user.senha}"></td>
-        <td th:text="${user.idLivroAlugado != null ? user.idLivroAlugado : 'Nenhum livro'} "></td>
-        <td th:text="${user.cargo}"></td>
-
-
-    <td><a th:href = "@{/editar/{id} (id= ${user.id})}">Editar</a></td>
-        <td><a th:href = "@{/excluir/{id} (id= ${user.id})}">Deletar</a></td>
-
-    </tr>
-    </tbody>
-</table>
-<p th:if="${users.isEmpty()}">Nenhum usuario cadastrado</p>
-
-<div th:if = "${mensagemErro}">
-    <p th:text = "${mensagemErro}"></p>
+<div class="cabecalho">
+    <h1>Usuários</h1>
+    <a th:href="@{/cadastro}" class="btn-novo">+ Novo usuário</a>
 </div>
+
+
+    <div th:if="${!users.isEmpty()}" class="grade">
+
+
+        <div th:each="user : ${users}" class="card">
+            <div class="card-header">
+            <p th:text="${user.nome}" class="card-nome"></p>
+                <div class="card-labels">
+                <span th:text="${user.cargo}" class="card-cargo"></span>
+                <span th:text="${user.status}" class="card-status"></span>
+                </div>
+            </div>
+            <p th:text="${user.email}" class="card-email"></p>
+            <p th:text="${user.idLivroAlugado != null ? user.idLivroAlugado : 'Nenhum livro alugado'} " class="card-idLivro"> </p>
+
+
+            <div class="botoes">
+                <a th:href="@{/editar/{id}(id=${user.id})}" class="btn-editar">Editar</a>
+                <a th:href="@{/excluir/{id}(id=${user.id})}" class="btn-deletar">Deletar</a>
+            </div>
+        </div>
+    </div>
+
+
+    <p class="mensagem-vazia" th:if="${users.isEmpty()}">Nenhum usuário cadastrado</p>
+
+
+<div class="mensagem-erro" th:if="${mensagemErro}">
+    <p th:text="${mensagemErro}"></p>
+</div>
+
 </body>
 </html>
