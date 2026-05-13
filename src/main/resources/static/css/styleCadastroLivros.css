@@ -53,13 +53,15 @@
           gap: 12px;
         }
 
-        .btn-cancelar {
+        a.btn-cancelar {
           padding: 10px 20px;
           font-size: 14px;
           background-color: #5C1F0A;
           color: #F5D5B8;
           border: 1px solid #57A2E10;
           border-radius: 6px;
+          cursor: pointer;
+          text-decoration: none;
         }
 
         .btn-salvar {
