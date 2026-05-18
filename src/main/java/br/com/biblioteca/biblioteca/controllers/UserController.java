@@ -69,6 +69,7 @@ public class UserController {
         }
 
         if(userCadastro.getId() == null) {
+            userCadastro.setSenha(passwordEncoder.encode(userCadastro.getSenha()));
             userRepository.save(userCadastro);
 
 
