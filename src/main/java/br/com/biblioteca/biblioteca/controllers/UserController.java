@@ -35,7 +35,11 @@ public class UserController {
 
     @GetMapping( "/cadastro")
     public String cadastroUser(Model model){
-        model.addAttribute("user", new User());
+
+        User user = new User();
+        user.setCargo(Cargo.ALUNO);
+        user.setStatus(Status.EM_DIA);
+        model.addAttribute("user", user);
         model.addAttribute("cargos", Cargo.values());
         model.addAttribute("statuss", Status.values());
         return "Cadastro";

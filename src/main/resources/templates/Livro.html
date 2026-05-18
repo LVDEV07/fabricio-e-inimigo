@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +14,7 @@
 <div class="cabecalho">
     <img th:src="@{/images/BIBLIOTECH.png}" alt="logo">
     <h1>Bibliotech</h1>
-    <a class="btn-novo" th:href="@{/home/cadastroLivro}">+ Novo livro</a>
+    <a class="btn-novo" th:href="@{/home/cadastroLivro}" sec:authorize="hasRole('ADMIN')">+ Novo livro</a>
 </div>
 
 <div class="grade">
@@ -23,8 +24,9 @@
         <p class="card-nome" th:text="${livro.nome}"></p>
         <p class="card-autor" th:text="${livro.autor}"></p>
         <div class="card-acoes">
-            <a class="btn-editar" th:href="@{/home/editarLivro/{id}(id=${livro.id})}">Editar</a>
-            <a class="btn-excluir" th:href="@{/home/excluir/{id}(id=${livro.id})}">Excluir</a>
+            <a class="btn-editar" th:href="@{/home/editarLivro/{id}(id=${livro.id})}" sec:authorize="hasRole('ADMIN')">Editar</a>
+            <a class="btn-excluir" th:href="@{/home/excluir/{id}(id=${livro.id})}" sec:authorize="hasRole('ADMIN')">Excluir</a>
+            <a class="btn-excluir" th:href="@{/home/excluir/{id}(id=${livro.id})}" sec:authorize="hasRole('ALUNO')">Alugar</a>
         </div>
     </div>
 

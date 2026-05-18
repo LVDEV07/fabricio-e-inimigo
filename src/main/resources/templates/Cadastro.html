@@ -42,9 +42,9 @@
         </div>
 
         <div class="campo">
-            <label>Status: </label>
-            <select th:field="*{status}" required>
-                <option value="">Selecione...</option>
+            <label th:if="${user.id != null}">Status: </label>
+            <select th:field="*{status}" th:if="${user.id != null}" required>
+                <option value="" >Selecione...</option>
                 <option th:each="status : ${statuss}"
                         th:value="${status}"
                         th:text="${status}">
@@ -53,8 +53,8 @@
         </div>
 
         <div class="campo">
-        <label>Cargo: </label>
-        <select th:field="*{cargo}" required>
+        <label th:if="${user.id != null}">Cargo: </label >
+        <select th:field="*{cargo}" th:if="${user.id != null}"required>
             <option value="">Selecione...</option>
             <option th:each="cargo : ${cargos}"
                     th:value="${cargo}"

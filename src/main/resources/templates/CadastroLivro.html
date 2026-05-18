@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,14 @@
     <link rel="stylesheet" th:href="@{/css/styleCadastroLivros.css}">
 
 </head>
-<body>
+
+<body sec:authorize="hasRole('ALUNO')">
+
+<h1>Você não possui permissão!</h1>
+
+</body>
+
+<body sec:authorize="hasRole('ADMIN')">
 
 <div class="container">
 
