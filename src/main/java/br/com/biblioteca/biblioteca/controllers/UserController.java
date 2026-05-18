@@ -5,6 +5,7 @@ import br.com.biblioteca.biblioteca.Enums.Status;
 import br.com.biblioteca.biblioteca.models.User;
 import br.com.biblioteca.biblioteca.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,11 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+
     @GetMapping("/")
     public String getUser(Model model){
         List<User> users = userRepository.findAll();
@@ -72,7 +78,7 @@ public class UserController {
 
             userQueVeioDoBancoDeDados.setNome(userCadastro.getNome());
             userQueVeioDoBancoDeDados.setEmail(userCadastro.getEmail());
-            userQueVeioDoBancoDeDados.setSenha(userCadastro.getSenha());
+            userQueVeioDoBancoDeDados.setSenha(passwordEncoder.encode(userCadastro.getSenha()));
             userQueVeioDoBancoDeDados.setIdLivroAlugado(userCadastro.getIdLivroAlugado());
             userQueVeioDoBancoDeDados.setStatus(userCadastro.getStatus());
             userQueVeioDoBancoDeDados.setCargo(userCadastro.getCargo());

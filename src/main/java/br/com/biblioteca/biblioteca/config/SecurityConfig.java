@@ -22,11 +22,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/login", "/register").permitAll() // Rota publicas
-                .anyRequest().authenticated() // Qualquer rota ele vai privar
+                .requestMatchers("/login", "/cadastro", "/salvar").permitAll()
+                .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
+                .anyRequest().authenticated()
         ).formLogin(form -> form
                 .loginPage("/login")
-                .defaultSuccessUrl("/home", true) // Sempre redireciona para pagina home quando o login é feito com sucesso
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/home", true)
                 .permitAll()
         ).logout(logout -> logout
                 .logoutSuccessUrl("/login?logout")

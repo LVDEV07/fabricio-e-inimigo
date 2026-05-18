@@ -27,14 +27,14 @@ public class UserService implements UserDetailsService {
 
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getEmail())
-                .password(user.getSenha())
+                .password(passwordEncoder.encode(user.getSenha()))
                 .roles(user.getCargo().toString())
                 .build();
     }
 
-    public void register(String username, String password, Cargo cargo){
+    public void register(String email, String password, Cargo cargo){
         User user = new User();
-        user.setEmail(username);
+        user.setEmail(email);
         user.setCargo(cargo);
         user.setSenha(passwordEncoder.encode(password));
 
