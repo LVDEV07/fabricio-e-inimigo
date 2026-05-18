@@ -24,15 +24,21 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/login", "/cadastro", "/salvar").permitAll()
                 .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
+                .requestMatchers("/home/cadastroLivro", "/").hasRole("ADMIN")
                 .anyRequest().authenticated()
         ).formLogin(form -> form
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/home", true)
+                .defaultSuccessUrl("/home", true).
+                failureUrl("/login?erro")
                 .permitAll()
         ).logout(logout -> logout
                 .logoutSuccessUrl("/login?logout")
-                .permitAll()
+                .permitAll())
+                .exceptionHandling(acessobloqueado -> acessobloqueado
+                        .accessDeniedHandler((request, response, accessDeniedException) -> {
+                    response.sendRedirect("/home");
+                })
         );
 
         return http.build();
