@@ -56,7 +56,12 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String loginPage(){return "login";}
+    public String loginPage(@RequestParam(value = "erro", required = false) String erro, Model model){
+        if(erro != null){
+            model.addAttribute("mensagemErro", "E-mail ou senha incorretos!");
+        }
+        return "login";
+    }
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute User userCadastro, RedirectAttributes redirectAttributes){
@@ -75,9 +80,9 @@ public class UserController {
         if(userCadastro.getId() == null) {
             userCadastro.setSenha(passwordEncoder.encode(userCadastro.getSenha()));
             userRepository.save(userCadastro);
-
-
         }
+
+
         else{
             User userQueVeioDoBancoDeDados = userRepository.findById(userCadastro.getId()).orElseThrow(() -> new RuntimeException("usuario não encontrado"));
 
