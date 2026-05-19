@@ -32,7 +32,9 @@
         <div class="card-acoes">
             <a class="btn-editar" th:href="@{/home/editarLivro/{id}(id=${livro.id})}" sec:authorize="hasRole('ADMIN')">Editar</a>
             <a class="btn-excluir" th:href="@{/home/excluir/{id}(id=${livro.id})}" sec:authorize="hasRole('ADMIN')">Excluir</a>
-            <a class="btn-excluir" th:href="@{/home/excluir/{id}(id=${livro.id})}" sec:authorize="hasRole('ALUNO')">Alugar</a>
+            <form th:action="@{/home/alugar/{id}(id=${livro.id})}" method="post">
+                <button type="submit" class="btn-excluir">Alugar</button>
+            </form>
         </div>
     </div>
 

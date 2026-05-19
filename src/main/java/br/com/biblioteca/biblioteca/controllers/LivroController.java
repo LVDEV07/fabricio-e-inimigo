@@ -1,16 +1,20 @@
 package br.com.biblioteca.biblioteca.controllers;
 
 import br.com.biblioteca.biblioteca.Enums.Cargo;
+import br.com.biblioteca.biblioteca.Enums.Status;
 import br.com.biblioteca.biblioteca.models.Livro;
 import br.com.biblioteca.biblioteca.models.User;
 import br.com.biblioteca.biblioteca.repository.LivroRepository;
 import br.com.biblioteca.biblioteca.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +23,10 @@ import java.util.Optional;
 public class LivroController {
     @Autowired
     private LivroRepository livroRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
     @GetMapping
     public String getLivro(Model model){
         List<Livro> livros = livroRepository.findAll();
@@ -73,6 +81,52 @@ public class LivroController {
         livroRepository.deleteById(id);
 
         return "redirect:/home";
+    }
+
+    @PostMapping("/alugar/{idLivro}")
+    public String alugar(@PathVariable Long idLivro,
+                         @AuthenticationPrincipal UserDetails userDetails,
+                         RedirectAttributes redirectAttributes){
+
+        User user = userRepository.findByEmail(userDetails.getUsername())
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+
+
+        if(user.getStatus() == Status.EM_ATRASO){
+            redirectAttributes.addFlashAttribute("mensagemErro", "Você possui livros em atraso!");
+            return "redirect:/home";
+        }
+
+        if(user.getLivrosAlugados().size() >= 5){
+            redirectAttributes.addFlashAttribute("mensagemErro", "Limite de 5 livros atingido!");
+            return "redirect:/home";
+        }
+
+        if(userRepository.existsByLivrosAlugadosContaining(idLivro)){
+            redirectAttributes.addFlashAttribute("mensagemErro", "Livro já está alugado!");
+            return "redirect:/home";
+        }
+
+        user.getLivrosAlugados().add(idLivro);
+        user.setDataUltimoAluguel(LocalDateTime.now());
+        userRepository.save(user);
+
+        redirectAttributes.addFlashAttribute("mensagemSucesso", "Livro alugado com sucesso!");
+        return "redirect:/home/meusAlugados";
+    }
+
+
+
+    @GetMapping("/meusAlugados")
+    public String meusAlugados(@AuthenticationPrincipal UserDetails userDetails, Model model){
+        User user = userRepository.findByEmail(userDetails.getUsername())
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        List<Livro> livros = livroRepository.findAllById(user.getLivrosAlugados());
+        model.addAttribute("livros", livros);
+        model.addAttribute("dataDevolucao", user.getDataUltimoAluguel().plusDays(7));
+        return "MeusAlugados";
     }
 
 }

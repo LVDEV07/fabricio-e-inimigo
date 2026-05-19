@@ -4,6 +4,10 @@ import br.com.biblioteca.biblioteca.Enums.Cargo;
 import br.com.biblioteca.biblioteca.Enums.Status;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "User")
 public class User {
@@ -29,6 +33,14 @@ public class User {
     @Column(nullable = false)
     private Status status;
 
+    @ElementCollection
+    @CollectionTable(name = "user_livros_alugados", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "livro_id")
+    private List<Long> livrosAlugados = new ArrayList<>();
+
+    @Column(nullable = true)
+    private LocalDateTime dataUltimoAluguel;
+
     public User() {
     }
 
@@ -43,6 +55,21 @@ public class User {
     }
 
 
+    public List<Long> getLivrosAlugados() {
+        return livrosAlugados;
+    }
+
+    public void setLivrosAlugados(List<Long> livrosAlugados) {
+        this.livrosAlugados = livrosAlugados;
+    }
+
+    public LocalDateTime getDataUltimoAluguel() {
+        return dataUltimoAluguel;
+    }
+
+    public void setDataUltimoAluguel(LocalDateTime dataUltimoAluguel) {
+        this.dataUltimoAluguel = dataUltimoAluguel;
+    }
 
     public Status getStatus() {
         return status;
