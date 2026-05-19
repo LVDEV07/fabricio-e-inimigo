@@ -119,7 +119,16 @@ body {
     text-decoration: none;
 }
 
-
+.btn-sair{
+    background-color: #5C1F0A;
+    color: #F5D5B8;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+}
 
 .cabecalho {
     display: flex;
