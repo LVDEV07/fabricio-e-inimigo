@@ -56,9 +56,16 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String loginPage(@RequestParam(value = "erro", required = false) String erro, Model model){
+    public String loginPage(
+            @RequestParam(value = "erro", required = false) String erro,
+            @RequestParam(value = "logout", required = false) String logout,
+            Model model){
+
         if(erro != null){
             model.addAttribute("mensagemErro", "E-mail ou senha incorretos!");
+        }
+        if(logout != null){
+            model.addAttribute("mensagemSucesso", "Logout realizado com sucesso!");
         }
         return "login";
     }

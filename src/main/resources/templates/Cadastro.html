@@ -54,43 +54,34 @@
                 </div>
 
             </div>
-        </form>
-    </section>
 
+            <div th:if="${user.id != null}">
 
-    <section>
-            <form>
                 <div class="campo">
-                <label th:if="${user.id != null}">ID Livro alugado</label>
-                <input type="number" th:field="*{idLivroAlugado}" th:if="${user.id != null}">
+                    <label>ID Livro alugado</label>
+                    <input type="number" th:field="*{idLivroAlugado}">
                 </div>
 
                 <div class="campo">
-                    <label th:if="${user.id != null}">Status: </label>
-                    <select th:field="*{status}" th:if="${user.id != null}" required>
-                        <option value="" >Selecione...</option>
-                        <option th:each="status : ${statuss}"
-                                th:value="${status}"
-                                th:text="${status}">
-                        </option>
+                    <label>Status: </label>
+                    <select th:field="*{status}" required>
+                        <option value="">Selecione...</option>
+                        <option th:each="s : ${statuss}" th:value="${s}" th:text="${s}"></option>
                     </select>
                 </div>
 
                 <div class="campo">
-                <label th:if="${user.id != null}">Cargo: </label >
-                <select th:field="*{cargo}" th:if="${user.id != null}"required>
-                    <option value="">Selecione...</option>
-                    <option th:each="cargo : ${cargos}"
-                            th:value="${cargo}"
-                            th:text="${cargo}">
-                    </option>
-                </select>
+                    <label>Cargo: </label>
+                    <select th:field="*{cargo}" required>
+                        <option value="">Selecione...</option>
+                        <option th:each="c : ${cargos}" th:value="${c}" th:text="${c}"></option>
+                    </select>
+                </div>
+
             </div>
-
-            <br>
-
         </form>
     </section>
+
 
     <div th:if = "${mensagemEmail}">
         <p th:text = "${mensagemEmail}"></p>
