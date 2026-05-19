@@ -2,7 +2,9 @@ package br.com.biblioteca.biblioteca.controllers;
 
 import br.com.biblioteca.biblioteca.Enums.Cargo;
 import br.com.biblioteca.biblioteca.Enums.Status;
+import br.com.biblioteca.biblioteca.models.Livro;
 import br.com.biblioteca.biblioteca.models.User;
+import br.com.biblioteca.biblioteca.repository.LivroRepository;
 import br.com.biblioteca.biblioteca.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +23,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private LivroRepository livroRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -49,7 +54,10 @@ public class UserController {
     public String userEditar(@PathVariable Long id, Model model){
 
         User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        List<Livro> livrosAlugados = livroRepository.findAllById(user.getLivrosAlugados());
+
         model.addAttribute("user", user);
+        model.addAttribute("livrosAlugados", livrosAlugados);
         model.addAttribute("cargos", Cargo.values());
         model.addAttribute("statuss", Status.values());
         return "Cadastro";
@@ -69,6 +77,7 @@ public class UserController {
         }
         return "login";
     }
+
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute User userCadastro, RedirectAttributes redirectAttributes){
@@ -96,7 +105,6 @@ public class UserController {
             userQueVeioDoBancoDeDados.setNome(userCadastro.getNome());
             userQueVeioDoBancoDeDados.setEmail(userCadastro.getEmail());
             userQueVeioDoBancoDeDados.setSenha(passwordEncoder.encode(userCadastro.getSenha()));
-            userQueVeioDoBancoDeDados.setIdLivroAlugado(userCadastro.getIdLivroAlugado());
             userQueVeioDoBancoDeDados.setStatus(userCadastro.getStatus());
             userQueVeioDoBancoDeDados.setCargo(userCadastro.getCargo());
 
@@ -111,7 +119,7 @@ public class UserController {
     public String excluir(@PathVariable Long id, RedirectAttributes redirectAttributes){
 
         User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-        if (user.getIdLivroAlugado() != null) {
+        if (!user.getLivrosAlugados().isEmpty()) {
             redirectAttributes.addFlashAttribute("mensagemErro", "Não é possível excluir um usuário com livro alugado!");
             return "redirect:/";
         }
@@ -120,6 +128,19 @@ public class UserController {
 
         redirectAttributes.addFlashAttribute("mensagemSucesso", "Usuário excluído com sucesso!");
         return "redirect:/";
+    }
+
+    @GetMapping("/devolverLivro/{idUser}/{idLivro}")
+    public String devolverLivro(@PathVariable Long idUser, @PathVariable Long idLivro, RedirectAttributes redirectAttributes){
+
+        User user = userRepository.findById(idUser)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        user.getLivrosAlugados().remove(idLivro);
+        userRepository.save(user);
+
+        redirectAttributes.addFlashAttribute("mensagemSucesso", "Livro devolvido com sucesso!");
+        return "redirect:/editar/" + idUser;
     }
 
         }

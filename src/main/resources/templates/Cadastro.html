@@ -59,9 +59,13 @@
 
             <div th:if="${user.id != null}">
 
-                <div class="campo">
-                    <label>ID Livro alugado</label>
-                    <input type="number" th:field="*{idLivroAlugado}">
+                <div class="campo" th:if="${user.id != null}">
+                    <label>Livros alugados: </label>
+                    <div th:each="livro : ${livrosAlugados}">
+                    <span th:text="${livro.nome}"></span>
+                    <a th:href="@{/devolverLivro/{idUser}/{idLivro}(idUser=${user.id}, idLivro=${livro.id})}">Remover</a>
+                </div>
+                    <p th:if="${user.livrosAlugados.isEmpty()}">Nenhum livro alugado</p>
                 </div>
 
                 <div class="campo">
