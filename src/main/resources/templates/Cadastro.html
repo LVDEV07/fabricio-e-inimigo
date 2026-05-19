@@ -1,80 +1,90 @@
-    <!DOCTYPE html>
-    <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <title>Cadastro</title>
-        <link rel="stylesheet" th:href="@{/css/styleCadastroUser.css}">
-    </head>
-    <body>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro</title>
+    <link rel="stylesheet" th:href="@{/css/styleCadastroUser.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
+</head>
+<body>
+
     <div th:if = "${mensagemErro}">
         <p th:text = "${mensagemErro}"></p>
     </div>
 
+    <section>
+        <form th:object="${user}" method="post" th:action="@{/salvar}">
+            <div class="sign">
 
-    <div class="container">
-    <h1 th:text = "${user.id == null } ? 'Cadastro' : 'Atualizar Usuário' "></h1>
-    <form th:object="${user}" method="post" th:action="@{/salvar}">
+                <div class="cabecalho">
+                    <img th:src="@{/images/BIBLIOTECH.png}" alt="logo">
+                    <h1>BIBLIOTECH</h1>
+                </div>
 
-        <input type="hidden" th:field="*{id} ">
+                <div th:if = "${mensagemEmail}">
+                    <p th:text = "${mensagemEmail}"></p>
+                </div>
+              
+                <h3 th:text = "${user.id == null } ? 'Cadastro' : 'Atualizar Usuário' "></h3>
+
+                <input type="hidden" th:field="*{id} ">
+                <input type="hidden" th:if="${user.id == null}" th:field="*{status}">
+                <input type="hidden" th:if="${user.id == null}" th:field="*{cargo}">
+
+                <div class="login-email">
+                    <label>Nome: </label>
+                    <input type="text" th:field="*{nome}"  placeholder=" Digite seu nome" required autofocus>
+                </div>
+
+                <div class="login-email">
+                    <label>Email: </label>
+                    <input type="email" th:field="*{email}" placeholder=" Digite seu e-amail" required>
+
+                </div>
+                <div class="login-senha">
+                    <label>Senha: </label>
+                    <input type="text" th:field="*{senha}" placeholder=" Digite sua senha" required>
+                </div>
+
+                <div class="botoes">
+                    <button type="submit" class="btn-salvar">
+                        Salvar
+                    </button>
+                    <a th:href="@{/}" class="btn-cancelar">Cancelar</a>
+                </div>
+
+            </div>
+
+            <div th:if="${user.id != null}">
+
+                <div class="campo">
+                    <label>ID Livro alugado</label>
+                    <input type="number" th:field="*{idLivroAlugado}">
+                </div>
+
+                <div class="campo">
+                    <label>Status: </label>
+                    <select th:field="*{status}" required>
+                        <option value="">Selecione...</option>
+                        <option th:each="s : ${statuss}" th:value="${s}" th:text="${s}"></option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label>Cargo: </label>
+                    <select th:field="*{cargo}" required>
+                        <option value="">Selecione...</option>
+                        <option th:each="c : ${cargos}" th:value="${c}" th:text="${c}"></option>
+                    </select>
+                </div>
 
 
-        <div class="campo">
 
-        <label>Nome: </label>
-        <input type="text" th:field="*{nome}" required>
+            </div>
+        </form>
+    </section>
 
-    </div>
-
-
-        <div class="campo">
-        <label>Email: </label>
-        <input type="email" th:field="*{email}" required>
-        </div>
-
-        <div class="campo">
-        <label>Senha: </label>
-        <input type="text" th:field="*{senha}" required>
-        </div>
-
-        <div class="campo">
-        <label th:if="${user.id != null}">ID Livro alugado</label>
-        <input type="number" th:field="*{idLivroAlugado}" th:if="${user.id != null}">
-        </div>
-
-        <div class="campo">
-            <label>Status: </label>
-            <select th:field="*{status}" required>
-                <option value="">Selecione...</option>
-                <option th:each="status : ${statuss}"
-                        th:value="${status}"
-                        th:text="${status}">
-                </option>
-            </select>
-        </div>
-
-        <div class="campo">
-        <label>Cargo: </label>
-        <select th:field="*{cargo}" required>
-            <option value="">Selecione...</option>
-            <option th:each="cargo : ${cargos}"
-                    th:value="${cargo}"
-                    th:text="${cargo}">
-            </option>
-        </select>
-        </div>
-
-        <br>
-        <div class="botoes">
-        <button type="submit" class="btn-salvar">
-            Salvar
-        </button>
-        <a th:href="@{/}" class="btn-cancelar">Cancelar</a>
-        </div>
-    </form>
-    </div>
-
-    <div th:if = "${mensagemEmail}">
-        <p th:text = "${mensagemEmail}"></p>
-    </div>
-    </body>
-    </html>
+</body>
+</html>

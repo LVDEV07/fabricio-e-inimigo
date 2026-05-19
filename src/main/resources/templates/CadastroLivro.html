@@ -1,15 +1,29 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Livros</title>
     <link rel="stylesheet" th:href="@{/css/styleCadastroLivros.css}">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
 </head>
-<body>
 
-<div class="container">
+<body sec:authorize="hasRole('ALUNO')">
+
+<h1>Você não possui permissão!</h1>
+
+</body>
+
+<body sec:authorize="hasRole('ADMIN')">
+
+<section>
+
+    <div class="cabecalho">
+        <img th:src="@{/images/BIBLIOTECH.png}" alt="logo">
+        <h1>BIBLIOTECH</h1>
+    </div>
 
     <h1 class = "tituloCadastro" th:text = "${livro.id == null } ? 'Novo Livro' : 'Atualizar Livro'"> </h1>
 
@@ -59,7 +73,7 @@
         <button type="submit" class="btn-salvar">Salvar livro</button>
     </div>
         </form>
-</div>
+</section>
 
 
 </body>

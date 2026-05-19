@@ -5,6 +5,7 @@ import br.com.biblioteca.biblioteca.Enums.Status;
 import br.com.biblioteca.biblioteca.models.User;
 import br.com.biblioteca.biblioteca.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,11 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+
     @GetMapping("/")
     public String getUser(Model model){
         List<User> users = userRepository.findAll();
@@ -29,7 +35,11 @@ public class UserController {
 
     @GetMapping( "/cadastro")
     public String cadastroUser(Model model){
-        model.addAttribute("user", new User());
+
+        User user = new User();
+        user.setCargo(Cargo.ALUNO);
+        user.setStatus(Status.EM_DIA);
+        model.addAttribute("user", user);
         model.addAttribute("cargos", Cargo.values());
         model.addAttribute("statuss", Status.values());
         return "Cadastro";
@@ -46,7 +56,19 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String loginPage(){return "login";}
+    public String loginPage(
+            @RequestParam(value = "erro", required = false) String erro,
+            @RequestParam(value = "logout", required = false) String logout,
+            Model model){
+
+        if(erro != null){
+            model.addAttribute("mensagemErro", "E-mail ou senha incorretos!");
+        }
+        if(logout != null){
+            model.addAttribute("mensagemSucesso", "Logout realizado com sucesso!");
+        }
+        return "login";
+    }
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute User userCadastro, RedirectAttributes redirectAttributes){
@@ -63,16 +85,17 @@ public class UserController {
         }
 
         if(userCadastro.getId() == null) {
+            userCadastro.setSenha(passwordEncoder.encode(userCadastro.getSenha()));
             userRepository.save(userCadastro);
-
-
         }
+
+
         else{
             User userQueVeioDoBancoDeDados = userRepository.findById(userCadastro.getId()).orElseThrow(() -> new RuntimeException("usuario não encontrado"));
 
             userQueVeioDoBancoDeDados.setNome(userCadastro.getNome());
             userQueVeioDoBancoDeDados.setEmail(userCadastro.getEmail());
-            userQueVeioDoBancoDeDados.setSenha(userCadastro.getSenha());
+            userQueVeioDoBancoDeDados.setSenha(passwordEncoder.encode(userCadastro.getSenha()));
             userQueVeioDoBancoDeDados.setIdLivroAlugado(userCadastro.getIdLivroAlugado());
             userQueVeioDoBancoDeDados.setStatus(userCadastro.getStatus());
             userQueVeioDoBancoDeDados.setCargo(userCadastro.getCargo());

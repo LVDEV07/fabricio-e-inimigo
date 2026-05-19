@@ -32,9 +32,9 @@ public class UserService implements UserDetailsService {
                 .build();
     }
 
-    public void register(String username, String password, Cargo cargo){
+    public void register(String email, String password, Cargo cargo){
         User user = new User();
-        user.setEmail(username);
+        user.setEmail(email);
         user.setCargo(cargo);
         user.setSenha(passwordEncoder.encode(password));
 

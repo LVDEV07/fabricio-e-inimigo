@@ -22,15 +22,23 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/login", "/register").permitAll() // Rota publicas
-                .anyRequest().authenticated() // Qualquer rota ele vai privar
+                .requestMatchers("/login", "/cadastro", "/salvar").permitAll()
+                .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
+                .requestMatchers("/home/cadastroLivro", "/").hasRole("ADMIN")
+                .anyRequest().authenticated()
         ).formLogin(form -> form
                 .loginPage("/login")
-                .defaultSuccessUrl("/home", true) // Sempre redireciona para pagina home quando o login é feito com sucesso
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/home", true).
+                failureUrl("/login?erro")
                 .permitAll()
         ).logout(logout -> logout
                 .logoutSuccessUrl("/login?logout")
-                .permitAll()
+                .permitAll())
+                .exceptionHandling(acessobloqueado -> acessobloqueado
+                        .accessDeniedHandler((request, response, accessDeniedException) -> {
+                    response.sendRedirect("/home");
+                })
         );
 
         return http.build();
