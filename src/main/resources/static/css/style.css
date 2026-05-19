@@ -1,62 +1,62 @@
-    body {
+body {
     background-color: #C4703A;
     color: #F5D5B8;
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 40px 32px;
     font-family: "Bricolage Grotesque", sans-serif;
-    }
+}
 
-    .grade {
+.grade {
     display: flex;
     flex-wrap: wrap;
     gap: 24px;
-    }
+}
 
-    .card {
+.card {
     background-color: #F0E0CC;
     border-radius: 10px;
     border: 1px solid #E0A070;
     width: 260px;
     padding: 16px;
     word-break: break-all;
-    }
+}
 
-    .card-header {
+.card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    }
+}
 
-    .card-cargo {
+.card-cargo {
     background-color: #E0A070;
     color: #1E0C04;
     font-size: 11px;
     font-weight: bold;
     padding: 2px 8px;
     border-radius: 20px;
-    }
+}
 
-    .card-nome {
+.card-nome {
     font-size: 14px;
     font-weight: bold;
     color: #1E0C04;
     margin: 12px 0 4px 0;
-    }
+}
 
-    .card-email {
+.card-email {
     font-size: 13px;
     color: #3A1A0A;
     margin: 0 0 12px 0;
-    }
+}
 
-    .card-idLivro {
+.card-idLivro {
     font-size: 13px;
     color: #3A1A0A;
     margin: 0 0 12px 0;
-    }
+}
 
-    .card-status {
+.card-status {
     width: auto;
     display: flex;
     align-items: center;
@@ -67,17 +67,16 @@
     padding: 2px 8px;
     border-radius: 20px;
     justify-content: end;
-    }
+}
 
-    .card-labels {
+.card-labels {
     display: flex;
     gap: 4px;
     flex-wrap: wrap;
     justify-content: flex-end;
+}
 
-    }
-
-    .btn-editar {
+.btn-editar {
     width: 60px;
     padding: 6px 0;
     font-size: 12px;
@@ -88,16 +87,15 @@
     cursor: pointer;
     text-align: center;
     text-decoration: none;
-    }
+}
 
-    .botoes {
+.botoes {
     display: flex;
     justify-content: flex-end;
     gap: 12px;
-    }
+}
 
-    .btn-deletar {
-
+.btn-deletar {
     width: 60px;
     padding: 6px 0;
     font-size: 12px;
@@ -108,10 +106,9 @@
     cursor: pointer;
     text-align: center;
     text-decoration: none;
-    }
+}
 
-    .btn-novo {
-
+.btn-novo {
     background-color: #5C1F0A;
     color: #F5D5B8;
     border: none;
@@ -120,13 +117,13 @@
     font-size: 14px;
     cursor: pointer;
     text-decoration: none;
-    }
+}
 
 
 
-    .cabecalho {
+.cabecalho {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 32px;
-    }
+}
