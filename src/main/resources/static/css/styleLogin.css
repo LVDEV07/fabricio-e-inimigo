@@ -5,12 +5,12 @@ font-family: "Bricolage Grotesque", sans-serif;
 body{
     background-color: #C4703A;
     font-family: Arial, sans-serif;
-    background-image: url('/images/biblioteca-meio.jpg');
+    background-image: url('/images/exterior-biblioteca.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    min-height: 100vh;
+    min-height: 95vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -32,7 +32,7 @@ input{
     border-radius: 4px;
     width: 100%;
     height: 28px;
-    padding: 10px 0px;
+    padding-left: 10px;
 }
 
 .login-botoes{
