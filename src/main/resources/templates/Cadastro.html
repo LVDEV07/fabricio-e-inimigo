@@ -23,7 +23,9 @@
                     <h1>BIBLIOTECH</h1>
                 </div>
 
-        
+                <div th:if = "${mensagemEmail}">
+                    <p th:text = "${mensagemEmail}"></p>
+                </div>
               
                 <h3 th:text = "${user.id == null } ? 'Cadastro' : 'Atualizar Usuário' "></h3>
 
@@ -82,13 +84,11 @@
                     </select>
                 </div>
 
+
+
             </div>
         </form>
     </section>
 
-
-    <div th:if = "${mensagemEmail}">
-        <p th:text = "${mensagemEmail}"></p>
-    </div>
 </body>
 </html>
