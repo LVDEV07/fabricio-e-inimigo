@@ -18,7 +18,12 @@
 
 <body sec:authorize="hasRole('ADMIN')">
 
-<div class="container">
+<section>
+
+    <div class="cabecalho">
+        <img th:src="@{/images/BIBLIOTECH.png}" alt="logo">
+        <h1>BIBLIOTECH</h1>
+    </div>
 
     <h1 class = "tituloCadastro" th:text = "${livro.id == null } ? 'Novo Livro' : 'Atualizar Livro'"> </h1>
 
@@ -68,7 +73,7 @@
         <button type="submit" class="btn-salvar">Salvar livro</button>
     </div>
         </form>
-</div>
+</section>
 
 
 </body>
