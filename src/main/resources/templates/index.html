@@ -8,48 +8,50 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
-    </style>
 
 </head>
+
 <body>
-
-<div class="cabecalho">
-    <h1>Usuários</h1>
-    <a th:href="@{/cadastro}" class="btn-novo">+ Novo usuário</a>
-</div>
-
-
-    <div th:if="${!users.isEmpty()}" class="grade">
-
-
-        <div th:each="user : ${users}" class="card">
-            <div class="card-header">
-            <p th:text="${user.nome}" class="card-nome"></p>
-                <div class="card-labels">
-                <span th:text="${user.cargo}" class="card-cargo"></span>
-                <span th:text="${user.status}" class="card-status"></span>
-                </div>
+    <div class="cabecalho">
+        <h1>Usuários</h1>
+        <a th:href="@{/cadastro}" class="btn-novo">+ Novo usuário</a>
+        <form th:action="@{/logout}" method="post">
+            <div class="btn-sair">
+                <button type="submit">Sair</button>
             </div>
-            <p th:text="${user.email}" class="card-email"></p>
-            <p th:text="${user.idLivroAlugado != null ? user.idLivroAlugado : 'Nenhum livro alugado'} " class="card-idLivro"> </p>
-
-
-            <div class="botoes">
-                <a th:href="@{/editar/{id}(id=${user.id})}" class="btn-editar">Editar</a>
-                <a th:href="@{/excluir/{id}(id=${user.id})}" class="btn-deletar">Deletar</a>
-            </div>
-        </div>
+        </form>
     </div>
 
 
-    <p class="mensagem-vazia" th:if="${users.isEmpty()}">Nenhum usuário cadastrado</p>
+        <div th:if="${!users.isEmpty()}" class="grade">
 
 
-<div class="mensagem-erro" th:if="${mensagemErro}">
-    <p th:text="${mensagemErro}"></p>
-</div>
+            <div th:each="user : ${users}" class="card">
+                <div class="card-header">
+                <p th:text="${user.nome}" class="card-nome"></p>
+                    <div class="card-labels">
+                    <span th:text="${user.cargo}" class="card-cargo"></span>
+                    <span th:text="${user.status}" class="card-status"></span>
+                    </div>
+                </div>
+                <p th:text="${user.email}" class="card-email"></p>
+                <p th:text="${user.idLivroAlugado != null ? user.idLivroAlugado : 'Nenhum livro alugado'} " class="card-idLivro"> </p>
+
+
+                <div class="botoes">
+                    <a th:href="@{/editar/{id}(id=${user.id})}" class="btn-editar">Editar</a>
+                    <a th:href="@{/excluir/{id}(id=${user.id})}" class="btn-deletar">Deletar</a>
+                </div>
+            </div>
+        </div>
+
+
+        <p class="mensagem-vazia" th:if="${users.isEmpty()}">Nenhum usuário cadastrado</p>
+
+
+    <div class="mensagem-erro" th:if="${mensagemErro}">
+        <p th:text="${mensagemErro}"></p>
+    </div>
 
 </body>
 </html>
