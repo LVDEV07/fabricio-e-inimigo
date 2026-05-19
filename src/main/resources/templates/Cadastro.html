@@ -23,9 +23,13 @@
                     <h1>BIBLIOTECH</h1>
                 </div>
 
+        
+              
                 <h3 th:text = "${user.id == null } ? 'Cadastro' : 'Atualizar Usuário' "></h3>
 
                 <input type="hidden" th:field="*{id} ">
+                <input type="hidden" th:if="${user.id == null}" th:field="*{status}">
+                <input type="hidden" th:if="${user.id == null}" th:field="*{cargo}">
 
                 <div class="login-email">
                     <label>Nome: </label>
