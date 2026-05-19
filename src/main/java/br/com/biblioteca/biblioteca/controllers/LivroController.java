@@ -31,6 +31,7 @@ public class LivroController {
     public String getLivro(Model model){
         List<Livro> livros = livroRepository.findAll();
         model.addAttribute("livros", livros);
+        model.addAttribute("livrosAlugados", userRepository.findAllLivrosAlugados());
         return "Livro";
     }
 
@@ -124,6 +125,11 @@ public class LivroController {
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
         List<Livro> livros = livroRepository.findAllById(user.getLivrosAlugados());
+
+        if(user.getDataUltimoAluguel() != null){
+            model.addAttribute("dataDevolucao", user.getDataUltimoAluguel().plusDays(7));
+        }
+
         model.addAttribute("livros", livros);
         model.addAttribute("dataDevolucao", user.getDataUltimoAluguel().plusDays(7));
         return "MeusAlugados";
