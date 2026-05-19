@@ -17,6 +17,9 @@
 <div class="cabecalho">
     <img th:src="@{/images/BIBLIOTECH.png}" alt="logo">
     <h1>Bibliotech</h1>
+    <form th:action="@{/logout}" method="post">
+        <button type="submit">Sair</button>
+    </form>
     <a class="btn-novo" th:href="@{/home/cadastroLivro}" sec:authorize="hasRole('ADMIN')">+ Novo livro</a>
 </div>
 
