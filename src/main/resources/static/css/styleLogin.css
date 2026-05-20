@@ -5,7 +5,7 @@ font-family: "Bricolage Grotesque", sans-serif;
 body{
     background-color: #C4703A;
     font-family: Arial, sans-serif;
-    background-image: url('/images/exterior-biblioteca.jpg');
+    background-image: url('/images/imagem-login-bibliotech.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -74,8 +74,8 @@ label{
 }
 
 img{
-    width: 80px;
-    height: auto;
+height: 80px;
+width: auto;
 }
 
 .cabecalho{
