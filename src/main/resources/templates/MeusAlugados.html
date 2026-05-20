@@ -11,14 +11,14 @@
 </head>
 <body>
 
-<div class="cabecalho">
-    <div class="logo">
-        <img th:src="@{/images/BIBLIOTECH.png}" alt="logo">
-        <h1>Bibliotech</h1>
+    <div class="cabecalho">
+        <div class="logo">
+            <a th:href="@{/home}"><img th:src="@{/images/BIBLIOTECH.png}" alt="logo"></a>
+            <h1>BIBLIOTECH</h1>
+        </div>
+        <h1>Meus Alugados</h1>
+        <a class="btn-voltar" th:href="@{/home}">Voltar</a>
     </div>
-    <h1>Meus Alugados</h1>
-    <a class="btn-voltar" th:href="@{/home}">Voltar</a>
-</div>
 
 <div class="grade">
     <div class="card" th:each="livro : ${livros}">
