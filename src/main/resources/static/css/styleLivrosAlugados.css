@@ -5,14 +5,26 @@ font-family: "Bricolage Grotesque", sans-serif;
 body {
     color: #F5D5B8;
     margin: 0;
-    padding: 40px 32px;
+    background-image: url('/images/entrada-biblioteca.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.logo{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
 .cabecalho {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 32px;
+    margin: 10px 10px 32px 10px;
 }
 
 .cabecalho h1 {
@@ -40,6 +52,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 24px;
+    margin-left: 10px;
 }
 
 .card {
