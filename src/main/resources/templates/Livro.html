@@ -26,8 +26,9 @@
 
                 <a th:href="@{/home/meusAlugados}" sec:authorize="hasRole('ALUNO')" class="btn-novo">Meus Alugados</a>
 
-
                 <a class="btn-novo" th:href="@{/home/cadastroLivro}" sec:authorize="hasRole('ADMIN')">+ Novo livro</a>
+
+                <a class="btn-novo" th:href="@{/users}" sec:authorize="hasRole('ADMIN')">Usuários</a>
 
                 <form th:action="@{/logout}" method="post">
                     <button type="submit" class="Btn">
