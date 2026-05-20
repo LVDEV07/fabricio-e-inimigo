@@ -104,7 +104,9 @@ public class UserController {
 
             userQueVeioDoBancoDeDados.setNome(userCadastro.getNome());
             userQueVeioDoBancoDeDados.setEmail(userCadastro.getEmail());
-            userQueVeioDoBancoDeDados.setSenha(passwordEncoder.encode(userCadastro.getSenha()));
+            if(!userCadastro.getSenha().equals(userQueVeioDoBancoDeDados.getSenha())){
+                userQueVeioDoBancoDeDados.setSenha(passwordEncoder.encode(userCadastro.getSenha()));
+            }
             userQueVeioDoBancoDeDados.setStatus(userCadastro.getStatus());
             userQueVeioDoBancoDeDados.setCargo(userCadastro.getCargo());
 
