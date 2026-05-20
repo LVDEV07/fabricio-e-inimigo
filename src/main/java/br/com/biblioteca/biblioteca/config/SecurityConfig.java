@@ -24,7 +24,9 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/login", "/cadastro", "/salvar").permitAll()
                 .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
-                .requestMatchers("/home/cadastroLivro", "/").hasRole("ADMIN")
+                .requestMatchers("/home/alugar/**", "/home/meusAlugados").authenticated()
+                .requestMatchers("/", "/editar/**", "/excluir/**", "/devolverLivro/**").hasRole("ADMIN")
+                .requestMatchers("/home/cadastroLivro", "/home/salvarLivro", "/home/editarLivro/**", "/home/excluir/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
         ).formLogin(form -> form
                 .loginPage("/login")
