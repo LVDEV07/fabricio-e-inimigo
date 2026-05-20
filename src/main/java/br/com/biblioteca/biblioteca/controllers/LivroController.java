@@ -28,9 +28,23 @@ public class LivroController {
     private UserRepository userRepository;
 
     @GetMapping
-    public String getLivro(Model model){
-        List<Livro> livros = livroRepository.findAll();
+    public String getLivro(Model model, @RequestParam(value = "genero", required = false) String genero){
+        List<Livro> livros;
+
+
+        if(genero != null && !genero.isEmpty() && !genero.equals("todos")){
+            livros = livroRepository.findByGenero(genero);
+        } else {
+            livros = livroRepository.findAll();
+        }
+
+        List<String> generos = livroRepository.findAll()
+                .stream()
+                .map(Livro::getGenero)
+                .distinct()
+                .toList();
         model.addAttribute("livros", livros);
+        model.addAttribute("generos", generos);
         model.addAttribute("livrosAlugados", userRepository.findAllLivrosAlugados());
         return "Livro";
     }
