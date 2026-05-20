@@ -25,7 +25,7 @@ public class SecurityConfig {
                 .requestMatchers("/login", "/cadastro", "/salvar").permitAll()
                 .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
                 .requestMatchers("/home/alugar/**", "/home/meusAlugados").hasRole("ALUNO")
-                .requestMatchers("/", "/editar/**", "/excluir/**", "/devolverLivro/**").hasRole("ADMIN")
+                .requestMatchers("/", "/editar/**", "/excluir/**", "/devolverLivro/**", "/users").hasRole("ADMIN")
                 .requestMatchers("/home/cadastroLivro", "/home/salvarLivro", "/home/editarLivro/**", "/home/excluir/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
         ).formLogin(form -> form
