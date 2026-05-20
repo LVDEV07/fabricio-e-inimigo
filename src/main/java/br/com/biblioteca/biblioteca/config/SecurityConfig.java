@@ -24,7 +24,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/login", "/cadastro", "/salvar").permitAll()
                 .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
-                .requestMatchers("/home/alugar/**", "/home/meusAlugados").authenticated()
+                .requestMatchers("/home/alugar/**", "/home/meusAlugados").hasRole("ALUNO")
                 .requestMatchers("/", "/editar/**", "/excluir/**", "/devolverLivro/**").hasRole("ADMIN")
                 .requestMatchers("/home/cadastroLivro", "/home/salvarLivro", "/home/editarLivro/**", "/home/excluir/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
