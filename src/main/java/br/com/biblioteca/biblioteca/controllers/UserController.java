@@ -6,14 +6,18 @@ import br.com.biblioteca.biblioteca.models.Livro;
 import br.com.biblioteca.biblioteca.models.User;
 import br.com.biblioteca.biblioteca.repository.LivroRepository;
 import br.com.biblioteca.biblioteca.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -85,10 +89,6 @@ public class UserController {
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute User userCadastro, RedirectAttributes redirectAttributes){
-        if (userCadastro.getEmail().trim().isEmpty() || userCadastro.getNome().trim().isEmpty() || userCadastro.getSenha().trim().isEmpty() || userCadastro.getStatus() == null || userCadastro.getCargo() == null) {
-            redirectAttributes.addFlashAttribute("mensagemErro", "Insira todas as informações");
-            return "redirect:/cadastro";
-        }
 
         Optional<User> userComMesmoEmail = userRepository.findByEmail(userCadastro.getEmail());
 
@@ -98,27 +98,37 @@ public class UserController {
         }
 
         if(userCadastro.getId() == null) {
+            if (userCadastro.getEmail().trim().isEmpty() || userCadastro.getNome().trim().isEmpty() || userCadastro.getSenha().trim().isEmpty() || userCadastro.getStatus() == null || userCadastro.getCargo() == null) {
+                redirectAttributes.addFlashAttribute("mensagemErro", "Insira todas as informações");
+                return "redirect:/cadastro";
+            }
             userCadastro.setSenha(passwordEncoder.encode(userCadastro.getSenha()));
             userRepository.save(userCadastro);
-        }
 
+        } else {
+            if (userCadastro.getEmail().trim().isEmpty() || userCadastro.getNome().trim().isEmpty() || userCadastro.getStatus() == null || userCadastro.getCargo() == null) {
+                redirectAttributes.addFlashAttribute("mensagemErro", "Insira todas as informações");
+                return "redirect:/cadastro";
+            }
 
-        else{
-            User userQueVeioDoBancoDeDados = userRepository.findById(userCadastro.getId()).orElseThrow(() -> new RuntimeException("usuario não encontrado"));
+            User userQueVeioDoBancoDeDados = userRepository.findById(userCadastro.getId())
+                    .orElseThrow(() -> new RuntimeException("usuario não encontrado"));
 
             userQueVeioDoBancoDeDados.setNome(userCadastro.getNome());
             userQueVeioDoBancoDeDados.setEmail(userCadastro.getEmail());
-            if(!userCadastro.getSenha().equals(userQueVeioDoBancoDeDados.getSenha())){
+
+            if(userCadastro.getSenha() != null && !userCadastro.getSenha().trim().isEmpty()){
                 userQueVeioDoBancoDeDados.setSenha(passwordEncoder.encode(userCadastro.getSenha()));
             }
+
             userQueVeioDoBancoDeDados.setStatus(userCadastro.getStatus());
             userQueVeioDoBancoDeDados.setCargo(userCadastro.getCargo());
 
             userRepository.save(userQueVeioDoBancoDeDados);
         }
 
-        redirectAttributes.addFlashAttribute("mensagemSucesso","User cadastrado com sucesso! ");
-        return "redirect:/";
+        redirectAttributes.addFlashAttribute("mensagemSucesso","User cadastrado com sucesso!");
+        return "redirect:/users";
     }
 
     @GetMapping("/excluir/{id}")
@@ -127,13 +137,13 @@ public class UserController {
         User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
         if (!user.getLivrosAlugados().isEmpty()) {
             redirectAttributes.addFlashAttribute("mensagemErro", "Não é possível excluir um usuário com livro alugado!");
-            return "redirect:/";
+            return "redirect:/users";
         }
 
         userRepository.deleteById(id);
 
         redirectAttributes.addFlashAttribute("mensagemSucesso", "Usuário excluído com sucesso!");
-        return "redirect:/";
+        return "redirect:/users";
     }
 
     @GetMapping("/devolverLivro/{idUser}/{idLivro}")
@@ -143,10 +153,28 @@ public class UserController {
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
         user.getLivrosAlugados().remove(idLivro);
+        user.getDatasAluguel().remove(idLivro);
         userRepository.save(user);
 
         redirectAttributes.addFlashAttribute("mensagemSucesso", "Livro devolvido com sucesso!");
         return "redirect:/editar/" + idUser;
     }
 
+    @Scheduled(fixedRate = 3600000)
+    @Transactional
+    public void verificarVencimentos(){
+        List<User> users = userRepository.findAll();
+
+        for(User user : users){
+            for(Map.Entry<Long, LocalDateTime> entry : user.getDatasAluguel().entrySet()){
+                if(LocalDateTime.now().isAfter(entry.getValue().plusDays(7))){
+                    user.setStatus(Status.EM_ATRASO);
+                    userRepository.save(user);
+                    break;
+                }
+            }
         }
+    }
+
+
+}
