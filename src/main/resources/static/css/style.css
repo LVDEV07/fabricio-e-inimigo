@@ -1,16 +1,37 @@
+@import url(botao-sair.css);
+
 body {
     background-color: #C4703A;
     color: #F5D5B8;
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 40px 32px;
     font-family: "Bricolage Grotesque", sans-serif;
+    background-image: url('/images/biblioteca-com-pessoas.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+    overflow: hidden;
 }
 
 .grade {
     display: flex;
     flex-wrap: wrap;
     gap: 24px;
+    margin: 0 10px 0 10px;
+}
+
+.cabecalho{
+   display: flex;
+   justify-content: center;
+   gap: 15px;
+   margin-bottom: 5px;
+   padding: 15px
+}
+
+.cabecalho img{
+height: 80px;
+width: auto;
 }
 
 .card {
@@ -117,9 +138,11 @@ body {
     font-size: 14px;
     cursor: pointer;
     text-decoration: none;
+    align-items: center;
+    display: flex;
 }
 
-.btn-sair{
+.btn-voltar{
     background-color: #5C1F0A;
     color: #F5D5B8;
     border: none;
@@ -130,9 +153,11 @@ body {
     text-decoration: none;
 }
 
-.cabecalho {
+
+
+header{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 32px;
+    margin: 10px 10px 32px 10px;
 }
