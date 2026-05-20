@@ -30,12 +30,16 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
-    @GetMapping("/")
+    @GetMapping("/users")
     public String getUser(Model model){
         List<User> users = userRepository.findAll();
         model.addAttribute("users",users);
         return "index";
+    }
+
+    @GetMapping("/")
+    public String index(){
+        return "redirect:/home";
     }
 
     @GetMapping( "/cadastro")
