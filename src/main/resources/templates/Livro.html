@@ -15,7 +15,7 @@
 <body>
 
 
-    
+
     <header>
         <div class="container">
             <div class="logo">
@@ -47,6 +47,17 @@
     <div th:if="${mensagemSucesso}">
         <p th:text="${mensagemSucesso}"></p>
     </div>
+
+    <form th:action="@{/home}" method="get">
+        <select name="genero" onchange="this.value === 'todos' ? window.location.href='/home' : this.form.submit()">
+            <option value="todos" th:selected="${param.genero == null or param.genero.isEmpty()}">Todos os gêneros</option>
+            <option th:each="genero : ${generos}"
+                    th:value="${genero}"
+                    th:text="${genero}"
+                    th:selected="${#strings.equals(param.genero, genero)}">
+            </option>
+        </select>
+    </form>
 
     <section>
 
