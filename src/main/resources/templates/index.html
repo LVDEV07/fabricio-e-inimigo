@@ -27,6 +27,14 @@
         </div>
     </header>
 
+    <form th:action="@{/users}" method="get">
+        <input type="text" name="email" th:value="${param.email}" placeholder="Pesquisar por email...">
+        <select name="status" onchange="this.value === 'todos' ? window.location.href='/users' : this.form.submit()">
+            <option value="todos" th:selected="${param.status == null or param.status == 'todos'}">Todos</option>
+            <option th:each="s : ${statuss}" th:value="${s}" th:text="${s}" th:selected="${#strings.equals(param.status, s)}"></option>
+        </select>
+        <button type="submit">Buscar</button>
+    </form>
 
         <div th:if="${!users.isEmpty()}" class="grade">
 
