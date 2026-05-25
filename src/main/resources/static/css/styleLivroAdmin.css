@@ -17,21 +17,14 @@ body {
 
 
 header{
-  margin-bottom: 32px;
-  background-image: url('/images/placa-de-madeira.jpg');
-  background-size: cover;
-  background-blend-mode: multiply;
-  background-position: center;
-  background-attachment: fixed;
-  padding: 10px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+    margin: 10px 10px 32px 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 header h1 {
   font-size: 24px;
   color: #F0E0CC;
-  margin: 0;
 }
 
 header img {
@@ -91,6 +84,12 @@ section {
   gap: 8px;
 }
 
+.mensagem{
+    margin-left: 45%;
+    font-size: 20px;
+    color: #FFFAEA;
+}
+
 .btn-editar {
   flex: 1;
   padding: 6px 0;
@@ -106,7 +105,7 @@ section {
 
 .btn-excluir {
   flex: 1;
-  padding: 6px 0;
+  padding: 6px;
   font-size: 12px;
   background-color: #5C1F0A;
   color: #F5D5B8;
@@ -126,7 +125,7 @@ section {
     cursor: pointer;
     text-decoration: none;
     padding: 10px 14px;
-        font-size: 14px;
+    font-size: 14px;
 }
 
 .container{
@@ -146,4 +145,29 @@ section {
     justify-content: center;
     align-items: center;
     gap: 10px;
+}
+
+.logo img{
+    height: 80px;
+    width: auto;
+}
+
+.filtro{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 15px;
+}
+
+.filtro h1{
+    font-size: 25px;
+    color: #FFFAEA;
+}
+
+.filtro select{
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #5C1F0A;
+    color: #F5D5B8;
+    border: 0;
 }

@@ -13,18 +13,22 @@
 
 </head>
 <body>
-
-
-    
     <header>
         <div class="container">
             <div class="logo">
                 <img th:src="@{/images/BIBLIOTECH.png}" alt="logo">
-                <h1>Bibliotech</h1>
+                <h1>BIBLIOTECH</h1>
             </div>
 
+            <h1>Menu inicial</h1>
+
             <div class="botoes">
+
+                <a th:href="@{/home/meusAlugados}" sec:authorize="hasRole('ALUNO')" class="btn-novo">Meus Alugados</a>
+
                 <a class="btn-novo" th:href="@{/home/cadastroLivro}" sec:authorize="hasRole('ADMIN')">+ Novo livro</a>
+
+                <a class="btn-novo" th:href="@{/users}" sec:authorize="hasRole('ADMIN')">Usuários</a>
 
                 <form th:action="@{/logout}" method="post">
                     <button type="submit" class="Btn">
@@ -33,37 +37,49 @@
 
                         <div class="text">Sair</div>
                     </button>
-
-
                 </form>
             </div>
         </div>
     </header>
 
-
-    <div th:if="${mensagemErro}">
-        <p th:text="${mensagemErro}"></p>
+    <div class="mensagem">
+        <div th:if="${mensagemSucesso}">
+            <p th:text="${mensagemSucesso}"></p>
+        </div>
+        <div th:if="${mensagemErro}">
+            <p th:text="${mensagemErro}"></p>
+        </div>
     </div>
-    <div th:if="${mensagemSucesso}">
-        <p th:text="${mensagemSucesso}"></p>
+
+    <div class="filtro">
+        <h1>Gêneros</h1>
+        <form th:action="@{/home}" method="get">
+            <select name="genero" onchange="this.value === 'todos' ? window.location.href='/home' : this.form.submit()">
+                <option value="todos" th:selected="${param.genero == null or param.genero.isEmpty()}">Todos os gêneros</option>
+                <option th:each="genero : ${generos}"
+                        th:value="${genero}"
+                        th:text="${genero}"
+                        th:selected="${#strings.equals(param.genero, genero)}">
+                </option>
+            </select>
+        </form>
     </div>
 
     <section>
-
         <div class="card" th:each="livro : ${livros}">
-        <img th:src="${livro.urlCapa}" th:alt="${livro.nome}">
-        <p class="card-nome" th:text="${livro.nome}"></p>
-        <p class="card-autor" th:text="${livro.autor}"></p>
-        <div class="card-acoes">
-            <a class="btn-editar" th:href="@{/home/editarLivro/{id}(id=${livro.id})}" sec:authorize="hasRole('ADMIN')">Editar</a>
-            <a class="btn-excluir" th:href="@{/home/excluir/{id}(id=${livro.id})}" sec:authorize="hasRole('ADMIN')">Excluir</a>
-            <form th:action="@{/home/alugar/{id}(id=${livro.id})}" method="post" sec:authorize="hasRole('ALUNO')">
-                <button type="submit" class="btn-excluir"
-                        th:disabled="${livrosAlugados.contains(livro.id)}"
-                        th:text="${livrosAlugados.contains(livro.id)} ? 'Indisponível' : 'Alugar'">
-                </button>
-            </form>
-            </div>
+            <img th:src="${livro.urlCapa}" th:alt="${livro.nome}">
+            <p class="card-nome" th:text="${livro.nome}"></p>
+            <p class="card-autor" th:text="${livro.autor}"></p>
+            <div class="card-acoes">
+                <a class="btn-editar" th:href="@{/home/editarLivro/{id}(id=${livro.id})}" sec:authorize="hasRole('ADMIN')">Editar</a>
+                <a class="btn-excluir" th:href="@{/home/excluir/{id}(id=${livro.id})}" sec:authorize="hasRole('ADMIN')">Excluir</a>
+                <form th:action="@{/home/alugar/{id}(id=${livro.id})}" method="post" sec:authorize="hasRole('ALUNO')">
+                    <button type="submit" class="btn-excluir"
+                            th:disabled="${livrosAlugados.contains(livro.id)}"
+                            th:text="${livrosAlugados.contains(livro.id)} ? 'Indisponível' : 'Alugar'">
+                    </button>
+                </form>
+                </div>
         </div>
 
         <p th:if="${livros.isEmpty()}">Nenhum livro encontrado</p>

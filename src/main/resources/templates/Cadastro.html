@@ -19,7 +19,7 @@
             <div class="sign">
 
                 <div class="cabecalho">
-                    <img th:src="@{/images/BIBLIOTECH.png}" alt="logo">
+                    <a th:href="@{/home}"><img th:src="@{/images/BIBLIOTECH.png}" alt="logo"></a>
                     <h1>BIBLIOTECH</h1>
                 </div>
 
@@ -41,11 +41,41 @@
                 <div class="login-email">
                     <label>Email: </label>
                     <input type="email" th:field="*{email}" placeholder=" Digite seu e-amail" required>
-
                 </div>
+
                 <div class="login-senha">
                     <label>Senha: </label>
-                    <input type="text" th:field="*{senha}" placeholder=" Digite sua senha" required>
+                    <input type="text" name="senha" th:value="${user.id != null ? '' : ''}" placeholder=" Digite sua senha (deixe em branco para manter)" th:required="${user.id == null}">
+                </div>
+
+                <div th:if="${user.id != null}">
+
+                    <div class="livros" th:if="${user.id != null}">
+                        <label>Livros alugados: </label>
+                        <div class="tela-fundo">
+                            <div th:each="livro : ${livrosAlugados}" class="info-livro">
+                                <span th:text="${livro.nome}"></span>
+                                <a th:href="@{/devolverLivro/{idUser}/{idLivro}(idUser=${user.id}, idLivro=${livro.id})}">Remover</a>
+                            </div>
+                        </div>
+                        <p th:if="${user.livrosAlugados.isEmpty()}">Nenhum livro alugado</p>
+                    </div>
+
+                    <div class="campo">
+                        <label>Status: </label>
+                        <select th:field="*{status}" required>
+                            <option value="">Selecione...</option>
+                            <option th:each="s : ${statuss}" th:value="${s}" th:text="${s}"></option>
+                        </select>
+
+                        <label>Cargo: </label>
+                        <select th:field="*{cargo}" required>
+                            <option value="">Selecione...</option>
+                            <option th:each="c : ${cargos}" th:value="${c}" th:text="${c}"></option>
+                        </select>
+
+                    </div>
+
                 </div>
 
                 <div class="botoes">
@@ -54,39 +84,8 @@
                     </button>
                     <a th:href="@{/}" class="btn-cancelar">Cancelar</a>
                 </div>
-
             </div>
 
-            <div th:if="${user.id != null}">
-
-                <div class="campo" th:if="${user.id != null}">
-                    <label>Livros alugados: </label>
-                    <div th:each="livro : ${livrosAlugados}">
-                    <span th:text="${livro.nome}"></span>
-                    <a th:href="@{/devolverLivro/{idUser}/{idLivro}(idUser=${user.id}, idLivro=${livro.id})}">Remover</a>
-                </div>
-                    <p th:if="${user.livrosAlugados.isEmpty()}">Nenhum livro alugado</p>
-                </div>
-
-                <div class="campo">
-                    <label>Status: </label>
-                    <select th:field="*{status}" required>
-                        <option value="">Selecione...</option>
-                        <option th:each="s : ${statuss}" th:value="${s}" th:text="${s}"></option>
-                    </select>
-                </div>
-
-                <div class="campo">
-                    <label>Cargo: </label>
-                    <select th:field="*{cargo}" required>
-                        <option value="">Selecione...</option>
-                        <option th:each="c : ${cargos}" th:value="${c}" th:text="${c}"></option>
-                    </select>
-                </div>
-
-
-
-            </div>
         </form>
     </section>
 

@@ -11,18 +11,24 @@
 </head>
 <body>
 
-<div class="cabecalho">
-    <img th:src="@{/images/BIBLIOTECH.png}" alt="logo">
-    <h1>Meus Alugados</h1>
-    <a class="btn-voltar" th:href="@{/home}">Voltar</a>
-</div>
+    <div class="cabecalho">
+        <div class="logo">
+            <a th:href="@{/home}"><img th:src="@{/images/BIBLIOTECH.png}" alt="logo"></a>
+            <h1>BIBLIOTECH</h1>
+        </div>
+        <h1>Meus Alugados</h1>
+        <a class="btn-voltar" th:href="@{/home}">Voltar</a>
+    </div>
 
 <div class="grade">
     <div class="card" th:each="livro : ${livros}">
         <img th:src="${livro.urlCapa}" th:alt="${livro.nome}">
         <p class="card-nome" th:text="${livro.nome}"></p>
         <p class="card-autor" th:text="${livro.autor}"></p>
-        <p class="card-data" th:text="'Devolver até: ' + ${#temporals.format(dataDevolucao, 'dd/MM/yyyy')}"></p>
+        <p class="card-data"
+           th:if="${datasAluguel[livro.id] != null}"
+           th:text="'Devolver até: ' + ${#temporals.format(datasAluguel[livro.id].plusDays(7), 'dd/MM/yyyy')}">
+        </p>
     </div>
 </div>
 

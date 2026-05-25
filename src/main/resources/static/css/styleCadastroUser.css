@@ -14,6 +14,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 }
 
 .form{
@@ -32,7 +33,8 @@ input{
     border-radius: 4px;
     width: 100%;
     height: 28px;
-    padding: 10px 0px;
+    padding: 5px 0 5px 5px;
+    background-color: #FFFAEA;
 }
 
 .login-botoes{
@@ -144,4 +146,42 @@ input::placeholder{
 .btn-salvar:hover{
     background-color: #D4B89A;
     color: #8A3E18;
+}
+
+.campo{
+    margin: 10px 0 0 0;
+}
+
+.campo label{
+    background-color: #5C1F0A;
+    color: #F5D5B8;
+    padding: 3px 1px 3px 1px;
+    margin-right: 5px;
+    border-radius: 6px;
+}
+
+.livros{
+    margin-top: 10px;
+}
+
+.livros a{
+    text-decoration: none;
+    color: #F5D5B8;
+    background-color: #5C1F0A;
+    padding: 5px;
+    border: 1px solid;
+    border-radius: 8px;
+}
+
+.info-livro{
+    margin: 5px 0 5px 1px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tela-fundo{
+    background-color: #FEF1C1;
+    padding: 2px 5px 2px 5px;
+    border-radius: 6px;
 }

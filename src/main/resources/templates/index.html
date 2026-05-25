@@ -12,15 +12,20 @@
 </head>
 
 <body>
-    <div class="cabecalho">
+    <header>
+
+        <div class="cabecalho">
+            <a th:href="@{/home}"><img th:src="@{/images/BIBLIOTECH.png}" alt="logo"></a>
+            <h1>BIBLIOTECH</h1>
+        </div>
+
         <h1>Usuários</h1>
-        <a th:href="@{/cadastro}" class="btn-novo">+ Novo usuário</a>
-        <form th:action="@{/logout}" method="post">
-            <div class="btn-sair">
-                <button type="submit">Sair</button>
-            </div>
-        </form>
-    </div>
+        <div class="botoes">
+            <a th:href="@{/cadastro}" class="btn-novo">+ Novo usuário</a>
+
+            <a class="btn-voltar" th:href="@{/home}">Voltar</a>
+        </div>
+    </header>
 
 
         <div th:if="${!users.isEmpty()}" class="grade">

@@ -28,9 +28,23 @@ public class LivroController {
     private UserRepository userRepository;
 
     @GetMapping
-    public String getLivro(Model model){
-        List<Livro> livros = livroRepository.findAll();
+    public String getLivro(Model model, @RequestParam(value = "genero", required = false) String genero){
+        List<Livro> livros;
+
+
+        if(genero != null && !genero.isEmpty() && !genero.equals("todos")){
+            livros = livroRepository.findByGenero(genero);
+        } else {
+            livros = livroRepository.findAll();
+        }
+
+        List<String> generos = livroRepository.findAll()
+                .stream()
+                .map(Livro::getGenero)
+                .distinct()
+                .toList();
         model.addAttribute("livros", livros);
+        model.addAttribute("generos", generos);
         model.addAttribute("livrosAlugados", userRepository.findAllLivrosAlugados());
         return "Livro";
     }
@@ -110,7 +124,7 @@ public class LivroController {
         }
 
         user.getLivrosAlugados().add(idLivro);
-        user.setDataUltimoAluguel(LocalDateTime.now());
+        user.getDatasAluguel().put(idLivro, LocalDateTime.now());
         userRepository.save(user);
 
         redirectAttributes.addFlashAttribute("mensagemSucesso", "Livro alugado com sucesso!");
@@ -126,12 +140,8 @@ public class LivroController {
 
         List<Livro> livros = livroRepository.findAllById(user.getLivrosAlugados());
 
-        if(user.getDataUltimoAluguel() != null){
-            model.addAttribute("dataDevolucao", user.getDataUltimoAluguel().plusDays(7));
-        }
-
+        model.addAttribute("datasAluguel", user.getDatasAluguel());
         model.addAttribute("livros", livros);
-        model.addAttribute("dataDevolucao", user.getDataUltimoAluguel().plusDays(7));
         return "MeusAlugados";
     }
 

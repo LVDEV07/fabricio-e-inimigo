@@ -6,7 +6,9 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "User")
@@ -38,8 +40,13 @@ public class User {
     @Column(name = "livro_id")
     private List<Long> livrosAlugados = new ArrayList<>();
 
-    @Column(nullable = true)
-    private LocalDateTime dataUltimoAluguel;
+    @ElementCollection
+    @CollectionTable(name = "user_datas_aluguel", joinColumns = @JoinColumn(name = "user_id"))
+    @MapKeyColumn(name = "livro_id")
+    @Column(name = "data_aluguel")
+    private Map<Long, LocalDateTime> datasAluguel = new HashMap<>();
+
+
 
     public User() {
     }
@@ -63,13 +70,8 @@ public class User {
         this.livrosAlugados = livrosAlugados;
     }
 
-    public LocalDateTime getDataUltimoAluguel() {
-        return dataUltimoAluguel;
-    }
-
-    public void setDataUltimoAluguel(LocalDateTime dataUltimoAluguel) {
-        this.dataUltimoAluguel = dataUltimoAluguel;
-    }
+    public Map<Long, LocalDateTime> getDatasAluguel() { return datasAluguel; }
+    public void setDatasAluguel(Map<Long, LocalDateTime> datasAluguel) { this.datasAluguel = datasAluguel; }
 
     public Status getStatus() {
         return status;
